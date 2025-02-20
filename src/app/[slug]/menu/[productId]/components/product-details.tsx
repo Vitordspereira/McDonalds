@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { formatCurrency } from "@/helpers/currency";
 
 
@@ -35,9 +36,9 @@ const  ProductDetails = ({ product }: ProductDetailsProps) => {
         setQuantity((prev) => prev + 1);
     }
     return ( 
-        <div className="relative z-50 mt-[-1.5rem] flex-auto rounded-t-3xl p-5 flex flex-col">
+        <div className="relative z-50 mt-[-1.5rem] flex-auto rounded-t-3xl p-5 flex flex-col overflow-hidden">
             
-           <div className="flex-auto">
+           <div className="flex-auto overflow-hidden">
              {/*Restaurante*/}
              <div className="flex items-center gap-1.5">
               <Image 
@@ -56,7 +57,7 @@ const  ProductDetails = ({ product }: ProductDetailsProps) => {
              <h2 className="mt-1 text-xl font-semibold">{product.name}</h2>
             
             {/*Preço e quantidade*/}
-             <div className="flex items-center justify-between">
+             <div className="flex items-center justify-between mt-3">
                 <h3 className="text-xl font-semibold">
                     {formatCurrency(product.price)}
                 </h3>
@@ -71,6 +72,7 @@ const  ProductDetails = ({ product }: ProductDetailsProps) => {
                 </div>
              </div>
 
+            <ScrollArea className="h-full">
             {/*Sobre*/}
              
             <div className="mt-6 space-y-3">
@@ -84,11 +86,16 @@ const  ProductDetails = ({ product }: ProductDetailsProps) => {
                     <ChefHatIcon size={18} />
                     <h4 className="font-semibold">Ingredientes</h4>
                 </div>
-                <p className="text-sm text-muted-foreground">{product.description}</p>
+                <ul className="list-disc px-5 text-sm text-muted-foreground">
+                    {product.ingredients.map((ingredient) =>(
+                    <li key={ingredient}>{ingredient}</li>
+                ))}
+                </ul>
             </div>
+            </ScrollArea>
            </div>
 
-            <Button className="mt-6 w-full rounded-full">Adicionar à sacola</Button>
+            <Button className="w-full rounded-full">Adicionar à sacola</Button>
         </div>
      );
 };
