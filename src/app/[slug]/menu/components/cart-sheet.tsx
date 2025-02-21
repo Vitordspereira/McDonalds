@@ -16,7 +16,7 @@ const CartSheet = () => {
           </SheetHeader>
           <div className="py-5">
           {products.map((product) => (
-            <CartProductItem key={product.id} product={product} />
+          <CartProductItem key={product.id} product={product} />
           ))}
           </div>
         </SheetContent>
