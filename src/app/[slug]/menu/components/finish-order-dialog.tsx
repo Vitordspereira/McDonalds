@@ -31,7 +31,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import { createrOrder } from "../actions/create-order";
+import { createOrder } from "../actions/create-order";
 import { CartContext } from "../contexts/cart";
 import { isValidCpf } from "../helpers/cpf";
 
@@ -64,7 +64,7 @@ const FinishOrderDialog = ({ open, onOpenChange }: FinishOrderDialogProps) => {
   const { slug } = useParams<{ slug: string }>();
   const { products } = useContext(CartContext);
   const searchParams = useSearchParams();
-  const [isPeding, startTransition] = useTransition()
+  const [isPending, startTransition] = useTransition()
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -80,7 +80,7 @@ const FinishOrderDialog = ({ open, onOpenChange }: FinishOrderDialogProps) => {
         "consumptionMethod",
       ) as ConsumptionMethod;
       startTransition(async () => {
-        await createrOrder({
+        await createOrder({
           consumptionMethod,
           customerCpf: data.cpf,
           customerName: data.name,
@@ -145,9 +145,9 @@ const FinishOrderDialog = ({ open, onOpenChange }: FinishOrderDialogProps) => {
                   type="submit"
                   variant="destructive"
                   className="rounded-full"
-                  disabled={isPeding}
+                  disabled={isPending}
                 >
-                  {isPeding && <Loader2Icon className="animate-spin"/>}
+                  {isPending && <Loader2Icon className="animate-spin"/>}
                   Finalizar
                 </Button>
                 <DrawerClose asChild>

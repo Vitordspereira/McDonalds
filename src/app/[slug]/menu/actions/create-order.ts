@@ -1,6 +1,7 @@
 "use server";
 
 import { ConsumptionMethod } from "@prisma/client";
+import { redirect } from "next/navigation";
 
 import { db } from "@/lib/prisma";
 
@@ -17,7 +18,7 @@ interface CreateOrderInput {
   slug: string;
 }
 
-export const createrOrder = async (input: CreateOrderInput) => {
+export const createOrder = async (input: CreateOrderInput) => {
   const restaurant = await db.restaurant.findUnique({
     where: {
       slug: input.slug,
@@ -57,4 +58,5 @@ export const createrOrder = async (input: CreateOrderInput) => {
       restaurantId: restaurant.id,
     },
   });
+  redirect(`/${input.slug}/orders`);
 };
